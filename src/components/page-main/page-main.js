@@ -513,6 +513,7 @@ export default {
     const setTime = (start, end) => {
       scene.remove(markers);
       scene.remove(Apollo);
+      console.log('moonQuakeData',moonQuakeData);
       if (start != undefined && end != undefined) {
         start = Date.parse(start);
         end = Date.parse(end);
@@ -525,6 +526,7 @@ export default {
           }
         }
       } else {
+        _moonquakeData = [];
         for (let _m = 0; _m < moonQuakeData.length; _m++) {
           _moonquakeData.push(moonQuakeData[_m]);
         }
@@ -547,6 +549,10 @@ export default {
       );
       scene.add(markers);
     };
+    const removeMoonMarker = () => {
+      scene.remove(markers);
+      scene.remove(Apollo);
+    }
     const add_station = (value) => {
       console.log('add_station',value);
       labelDiv.classList.add("hidden");
@@ -624,11 +630,13 @@ export default {
 
 
     const onChange = (event) => {
+      state.startTime = 0;
       state.mode = event;
+      removeMoonMarker();
       if (state.mode == 0) {
         setTime();
       } else if (state.mode == 1) {
-        add_station(0);
+        // add_station(0);
         // 處理Event資料
     
       }
@@ -672,6 +680,7 @@ export default {
       add_station,
       timeEventDatas,
       text,
+      removeMoonMarker,
     } //end: return;
 
   } // end: setup
